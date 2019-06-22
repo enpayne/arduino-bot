@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Good Boi Bot</title>
+</head>
+<body>
+<style>
+  html, body {
+    height: 100vh;
+    background-color: blanchedalmond;
+  }
+
+  .container {
+    height: 100%;
+    width: 40%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+  }
+
+  button {
+    height: 150px;
+    width: 150px;
+    background-color: steelblue;
+    border-radius: 19px;
+    margin: 9px;
+    font-size: 45px;
+    color: white;
+    cursor: pointer;
+  }
+
+  button.focus {
+    background-color: greenyellow;
+  }
+</style>
+
+<div class="container">
+  <div class="top">
+    <button id="forward">F</button>
+  </div>
+  <div class="middle">
+    <button id="left">L</button>
+    <button id="right">R</button>
+  </div>
+  <div class="bottom">
+    <button id="back">B</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+  window.api = {
+    goForward() {
+      axios.get('localhost/move?direction=forward');
+      console.log('move forward');
+    },
+
+    goLeft() {
+      console.log('move left');
+    },
+
+    goRight() {
+      console.log('move right');
+    },
+
+    goBack() {
+      console.log('move back');
+    }
+  };
+
+  document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('mousedown', () => {
+      button.classList.add('focus');
+    });
+    button.addEventListener('mouseup', () => {
+      button.classList.remove('focus');
+    });
+  });
+
+  document.querySelector('#forward').addEventListener('mousedown', window.api.goForward);
+  document.querySelector('#left').addEventListener('mousedown', window.api.goLeft);
+  document.querySelector('#right').addEventListener('mousedown', window.api.goRight);
+  document.querySelector('#back').addEventListener('mousedown', window.api.goBack);
+</script>
+
+</body>
+</html>
