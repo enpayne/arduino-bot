@@ -5,9 +5,17 @@
 #define Bin1 19
 #define Bin2 18
 
+/*
+ * Arduino IDE Setup:
+ * * Board: NodeMCU-32S
+ * * Programer: AVRISP mkll
+ * 
+ * Required Libraries
+ * * (none yet)
+ */
 
 const char* ssid     = "Fas-IoT";
-const char* password = "bluppblapp";
+const char* password = "";
 
 int speed = 0;
 
