@@ -22,6 +22,5 @@
 #define pwmChannelBR 3
 
 #define ssid "kandersteg"
-#define password "tunnel"
 
 #endif
