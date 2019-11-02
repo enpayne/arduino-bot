@@ -40,17 +40,13 @@ class Bootstrapper
         int frequency = 5000;
         int resolution = 8;
   
-        ledcSetup(pwmChannelFL, frequency, resolution);
-        ledcAttachPin(FL2, pwmChannel);
+        ledcSetup(pwmChannelL, frequency, resolution);
+        ledcAttachPin(FL2, pwmChannelL);
+        ledcAttachPin(BL2, pwmChannelL);
 
-        ledcSetup(pwmChannelFR, frequency, resolution);
-        ledcAttachPin(FR2, pwmChannel);
-
-        ledcSetup(pwmChannelBL, frequency, resolution);
-        ledcAttachPin(BL2, pwmChannel);
-
-        ledcSetup(pwmChannelBR, frequency, resolution);
-        ledcAttachPin(BR2, pwmChannel);        
+        ledcSetup(pwmChannelR, frequency, resolution);
+        ledcAttachPin(BR2, pwmChannelR);        
+        ledcAttachPin(FR2, pwmChannelR);
     }
 
     static void initializeFilesystem() {

@@ -17,24 +17,30 @@ int speedRight = 255;
 
 void setup() {
   Bootstrapper::waitForSerial();
-  Serial.write("Serial ready");
+  Serial.println("Serial ready");
   
   Bootstrapper::initializePins();
-  Serial.write("Pins initialized");
+  Serial.println("Pins initialized");
 
   Bootstrapper::setupWifi();
-  Serial.write("Wifi ready");
+  Serial.println("Wifi ready");
   
   Bootstrapper::initializeFilesystem();
-  Serial.write("Filesystem initialized");
+  Serial.println("Filesystem initialized");
+  
   
   server.on("/", handleRoot);
   server.on("/index.js", handleJs);
   server.on("/style.css", handleCss);
   
+
   server.on("/left/{}", changeSpeedLeft);
   server.on("/right/{}", changeSpeedRight);
   server.begin();
+
+  Serial.println("ready");
+  pinMode(2, OUTPUT);
+  digitalWrite(2, HIGH);
 }
 
 void changeSpeedLeft() {
@@ -95,14 +101,14 @@ void loop() {
   server.handleClient();
 
   digitalWrite(FL1, direction);
-  ledcWrite(pwmChannel, speedLeft);
+  ledcWrite(pwmChannelL, speedLeft);
 
   digitalWrite(BL1, direction);
-  ledcWrite(pwmChannel, speedLeft);
+  ledcWrite(pwmChannelL, speedLeft);
 
   digitalWrite(FR1, direction);
-  ledcWrite(pwmChannel, speedRight);
+  ledcWrite(pwmChannelR, speedRight);
 
   digitalWrite(BR1, direction);
-  ledcWrite(pwmChannel, speedRight);
+  ledcWrite(pwmChannelR, speedRight);
 }

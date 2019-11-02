@@ -15,11 +15,8 @@
 
 #define pwmChannel 5
 
-#define pwmChannelFL 0
-#define pwmChannelFR 1
-
-#define pwmChannelBL 2
-#define pwmChannelBR 3
+#define pwmChannelL 0
+#define pwmChannelR 1
 
 #define ssid "kandersteg"
 
