@@ -7,11 +7,8 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 
-#include "src/pins.h"
-#include "src/bootstrapper.cpp";
-
-const char *ssid = "kandersteg";
-const char *password = "tunnel";
+#include "src/Configuration.h"
+#include "src/Bootstrapper.cpp";
 
 WebServer server(80);
 

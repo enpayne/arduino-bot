@@ -17,3 +17,6 @@
 
 #define pwmChannelBL 2
 #define pwmChannelBR 3
+
+const char *ssid = "kandersteg";
+const char *password = "tunnel";
