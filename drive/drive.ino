@@ -1,3 +1,5 @@
+#include <Arduino.h>
+
 #define FL1 32
 #define FL2 33
 
@@ -32,7 +34,7 @@ void setup() {
   pinMode(BR2, OUTPUT);
 
   Serial.begin(115200);
-
+  
   int frequency = 5000;
   int resolution = 8;
 
