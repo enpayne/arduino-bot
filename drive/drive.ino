@@ -17,11 +17,20 @@ int speedRight = 255;
 
 void setup() {
   Bootstrapper::waitForSerial();
+  Serial.write("Serial ready");
+  
   Bootstrapper::initializePins();
-  Bootstrapper::setupWifi();
+  Serial.write("Pins initialized");
 
+  Bootstrapper::setupWifi();
+  Serial.write("Wifi ready");
+  
+  Bootstrapper::initializeFilesystem();
+  Serial.write("Filesystem initialized");
+  
   server.on("/", handleRoot);
   server.on("/index.js", handleJs);
+  server.on("/style.css", handleCss);
   
   server.on("/left/{}", changeSpeedLeft);
   server.on("/right/{}", changeSpeedRight);
@@ -68,7 +77,18 @@ void handleJs() {
 
   server.streamFile(file, "text/javascript");
   file.close();
-  server.send(200, "text/plain", "hello driver!");
+}
+
+void handleCss() {
+  File file = SPIFFS.open("/style.css", FILE_READ);
+
+  if(!file){
+    server.send(404);
+    return;
+  }
+
+  server.streamFile(file, "text/stylesheet");
+  file.close();
 }
 
 void loop() {
