@@ -8,22 +8,11 @@ html, body {
   width: 40%;
   margin: 0 auto;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center
 }
 
-button {
-  height: 150px;
-  width: 150px;
-  background-color: steelblue;
-  border-radius: 19px;
-  margin: 9px;
-  font-size: 45px;
-  color: white;
-  cursor: pointer;
-}
-
-button.focus {
-  background-color: greenyellow;
+input[type=range] {
+  -webkit-appearance: slider-vertical;
+  height: 80%;
 }

@@ -1,3 +1,6 @@
+#ifndef CONFIGURATION_H
+#define CONFIGURATION_H
+
 #define FL1 32
 #define FL2 33
 
@@ -18,5 +21,7 @@
 #define pwmChannelBL 2
 #define pwmChannelBR 3
 
-const char *ssid = "kandersteg";
-const char *password = "tunnel";
+#define ssid "kandersteg"
+#define password "tunnel"
+
+#endif

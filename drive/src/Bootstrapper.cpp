@@ -1,5 +1,9 @@
 #include <Arduino.h>
 #include "SPIFFS.h"
+#include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiAP.h>
+#include "Configuration.h"
 
 class Bootstrapper
 {
