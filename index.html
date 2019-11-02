@@ -3,22 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Good Boi Bot</title>
-  <link rel="stylesheet" href="https://raw.githubusercontent.com/enpayne/arduino-bot/master/script.js" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
 <div class="container">
-  <div class="top">
-    <button id="forward">F</button>
-  </div>
-  <div class="middle">
-    <button id="left">L</button>
-    <button id="right">R</button>
-  </div>
-  <div class="bottom">
-    <button id="back">B</button>
-  </div>
+  <input type="range" id="left" name="left" min="0" max="255" value="0">
+  <input type="range" id="right" name="right" min="0" max="255" value="0">
 </div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://raw.githubusercontent.com/enpayne/arduino-bot/master/script.js"></script>
+<script src="./script.js"></script>
 </body>
 </html>

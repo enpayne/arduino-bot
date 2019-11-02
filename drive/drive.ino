@@ -1,9 +1,6 @@
 #include <HTTP_Method.h>
 #include <WebServer.h>
 
-#include <WiFi.h>
-#include <WiFiClient.h>
-#include <WiFiAP.h>
 #include <WebServer.h>
 #include <ESPmDNS.h>
 
@@ -13,64 +10,54 @@
 WebServer server(80);
 
 int direction = HIGH;
-int speed = 100;
-bool drive = false;
+int speedLeft = 255;
+int speedRight = 255;
 
 void setup() {
-
   Bootstrapper::waitForSerial();
   Bootstrapper::initializePins();
   Bootstrapper::setupWifi();
 
-  Serial.println("helloooo");
-
   server.on("/", handleRoot);
-  server.on("/forward", goForward);
-  server.on("/backwards", goBackwards);
-  server.on("/halt", halt);
-
+  server.on("/left/{}", changeSpeedLeft);
+  server.on("/right/{}", changeSpeedRight);
   server.begin();
 }
 
-void halt() {
-  drive = false;
-}
-
-void goForward() {
-  Serial.println("Going forward");
-  direction = HIGH;
+void changeSpeedLeft() {
+  String arg = server.pathArg(0);
+  int speed = arg.toInt();
+  speedLeft = 255 - speed;
+  Serial.print("New left speed: ");
+  Serial.println(speedLeft);
   server.send(200);
 }
 
-void goBackwards() {
-  Serial.println("Going backwards");
-  direction = LOW;
+void changeSpeedRight() {
+  String arg = server.pathArg(0);
+  int speed = arg.toInt();
+  speedRight = 255 - speed;
+  Serial.print("New right speed: ");
+  Serial.println(speedRight);
   server.send(200);
 }
 
 void handleRoot() {
   server.send(200, "text/plain", "hello driver!");
-  drive = true;
 }
 
 void loop() {
   server.handleClient();
 
-  if (!drive) {
-    direction = HIGH;
-    speed = 255;
-    return;
-  }
+  digitalWrite(FL1, direction);
+  ledcWrite(pwmChannel, speedLeft);
 
-  digitalWrite(FL1,direction);
-  ledcWrite(pwmChannel, speed);
+  digitalWrite(BL1, direction);
+  ledcWrite(pwmChannel, speedLeft);
 
-  digitalWrite(FR1,direction);
-  ledcWrite(pwmChannel, speed);
+  digitalWrite(FR1, direction);
+  ledcWrite(pwmChannel, speedRight);
 
-  digitalWrite(BL1,direction);
-  ledcWrite(pwmChannel, speed);
-
-  digitalWrite(BR1,direction);
-  ledcWrite(pwmChannel, speed);
+  digitalWrite(BR1, direction);
+  ledcWrite(pwmChannel, speedRight);
 }
