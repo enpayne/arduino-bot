@@ -1,6 +1,6 @@
 {
+    "sketch": "drive.ino",
     "board": "esp32:esp32:mhetesp32devkit",
     "configuration": "FlashFreq=80,PartitionScheme=default,UploadSpeed=921600,DebugLevel=none",
-    "sketch": "drive.ino",
-    "port": "/dev/cu.SLAB_USBtoUART"
+    "output": "build"
 }
