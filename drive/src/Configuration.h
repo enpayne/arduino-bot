@@ -13,7 +13,8 @@
 #define BR1 22
 #define BR2 23
 
-#define pwmChannel 5
+#define pwmChannelL 5
+#define pwmChannelR 6
 
 #define pwmChannelFL 0
 #define pwmChannelFR 1
