@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "SPIFFS.h"
 
 class Bootstrapper
 {
@@ -16,7 +17,6 @@ class Bootstrapper
         IPAddress myIP = WiFi.softAPIP();
         Serial.print("AP IP address: ");
         Serial.println(myIP);
-
     }
 
     static void initializePins() {
@@ -47,5 +47,12 @@ class Bootstrapper
 
         ledcSetup(pwmChannelBR, frequency, resolution);
         ledcAttachPin(BR2, pwmChannel);        
+    }
+
+    static void initializeFilesystem() {
+          if(!SPIFFS.begin(true)){
+            Serial.println("An Error has occurred while mounting SPIFFS");
+            return;
+        }
     }
 };

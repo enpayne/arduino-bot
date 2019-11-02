@@ -7,8 +7,11 @@
 #include <WebServer.h>
 #include <ESPmDNS.h>
 
+#include "FS.h"
+#include "SPIFFS.h"
+
 #include "src/Configuration.h"
-#include "src/Bootstrapper.cpp";
+#include "src/Bootstrapper.cpp"
 
 WebServer server(80);
 
@@ -25,10 +28,11 @@ void setup() {
   Serial.println("helloooo");
 
   server.on("/", handleRoot);
+  server.on("/index.js", handleJs);
   server.on("/forward", goForward);
   server.on("/backwards", goBackwards);
   server.on("/halt", halt);
-
+  
   server.begin();
 }
 
@@ -49,8 +53,27 @@ void goBackwards() {
 }
 
 void handleRoot() {
-  server.send(200, "text/plain", "hello driver!");
-  drive = true;
+  File file = SPIFFS.open("/index.html", FILE_READ);
+
+  if(!file){
+    server.send(404);
+    return;
+  }
+
+  server.streamFile(file, "text/plain");
+  file.close();
+}
+
+void handleJs() {
+  File file = SPIFFS.open("/test.js", FILE_READ);
+
+  if(!file){
+    server.send(404);
+    return;
+  }
+
+  server.streamFile(file, "text/javascript");
+  file.close();
 }
 
 void loop() {
