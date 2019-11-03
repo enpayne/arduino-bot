@@ -15,10 +15,33 @@ int direction = HIGH;
 int speedLeft = 255;
 int speedRight = 255;
 
+#include <SPI.h>
+#include "src/lib/MAX7219LedMatrix/LedMatrix.h"
+
+#define NUMBER_OF_DEVICES 1
+#define CS_PIN 5
+
+/* How to connect
+   DIN: HSPID PIN, MOSI
+   CS:: Any free pin (CS_PIN)
+   CLK: HSPICLK PIN
+   GND: Ground
+   VCC: 3V3 - 5V
+*/
+
+LedMatrix ledMatrix = LedMatrix(NUMBER_OF_DEVICES, CS_PIN);
+
 void setup() {
   Bootstrapper::waitForSerial();
   Serial.println("Serial ready");
   
+  SPIClass spiRFID;
+  spiRFID.begin(14,12,13,15); //CLK,MISO,MOIS,SS
+  ledMatrix.init(spiRFID);
+  ledMatrix.setIntensity(15); // range is 0-15
+  clearLed();
+  fullLed();
+
   Bootstrapper::initializePins();
   Serial.println("Pins initialized");
 
@@ -41,6 +64,8 @@ void setup() {
   Serial.println("ready");
   pinMode(2, OUTPUT);
   digitalWrite(2, HIGH);
+
+  clearLed();
 }
 
 void changeSpeedLeft() {
@@ -95,6 +120,24 @@ void handleCss() {
 
   server.streamFile(file, "text/stylesheet");
   file.close();
+}
+
+void clearLed() {
+  ledMatrix.clear();
+  ledMatrix.commit();
+}
+
+void fullLed() {
+  ledMatrix.setColumn(0, B11111111);
+  ledMatrix.setColumn(1, B11111111);
+  ledMatrix.setColumn(2, B11111111);
+  ledMatrix.setColumn(3, B11111111);
+  ledMatrix.setColumn(4, B11111111);
+  ledMatrix.setColumn(5, B11111111);
+  ledMatrix.setColumn(6, B11111111);
+  ledMatrix.setColumn(7, B11111111);
+
+  ledMatrix.commit();
 }
 
 void loop() {
